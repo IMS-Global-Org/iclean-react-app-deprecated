@@ -48,8 +48,18 @@ class Login extends Component {
                     onChange={this.onChange} />
                 </Form.Field>
                 <Form.Field>
-                  
+                  <label>Password</label>
+                  <input
+                    required
+                    id='password'
+                    value={password}
+                    placeholder='Password'
+                    type='password'
+                    onChange={this.onChange} />
                 </Form.Field>
+                <Segment textAlign='center' basic>
+                  <Button primary type='submit'>Submit</Button>
+                </Segment>
               </Form>
             </Grid.Column>
 

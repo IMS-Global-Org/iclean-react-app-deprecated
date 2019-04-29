@@ -10,7 +10,8 @@ const options = {
 
 const enhancers = compose(
   applyMiddleware(thunk, apiMiddleware(options)),
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+  // window.devToolsExtension ? window.devToolsExtension() : f => f
+  window.devToolsExtension ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
 )
 
 const store = createStore(rootReducer, {}, enhancers)
