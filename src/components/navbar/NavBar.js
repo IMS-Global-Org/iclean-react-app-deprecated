@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import { handleLogout } from '../actions/auth'
-import { Menu, Dropdown } from 'semantic-ui-react'
+import React from 'react'
+import { Menu } from 'semantic-ui-react'
+
+import LeftNav from './LeftNav'
+import RightNav from './RightNav'
 
 
-class NavBar extends Component {
-  defaults = { activeItem: '' }
-  state = { ...defaults }
+const NavBar = () => (
+  <Menu>
+    <LeftNav />
+    <RightNav />
+  </Menu>
+)
 
-  handleItemClick = ({ name: activeItem }) => this.setState({ activeItem })
-}
-
-const mapStateToProps = (state, props) => {}
-
-export default connect(mapStateToProps)(NavBar)
+export default NavBar

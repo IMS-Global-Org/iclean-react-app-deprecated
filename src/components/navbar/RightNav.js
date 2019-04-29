@@ -1,18 +1,32 @@
 import React, { Component } from 'react'
-import { Menu, Dropdown } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Menu, Dropdown } from 'semantic-ui-react'
+import { handleLogout } from '../../actions/auth'
 
 
 class RightNav extends Component {
   defaults = { activeItem: '' }
-  state = { ...defaults }
+  state = { ...this.defaults }
+
+  componentDidMount = () => this.setActiveItem(this.props)
+  componentWillReceiveProps = (nextProps) => this.setActiveItem(nextProps)
+
+  setActiveItem = (props) => {
+    const { activeItem: currActItem } = this.state
+    const { activeItem: nextActItem } = this.props
+    if( nextActItem !== currActItem ) {
+      this.setState({ activeItem: nextActItem })
+    }
+  }
 
   onClick = ({ name: activeItem }) => this.setState({ activeItem })
 
   renderLoggedIn = () => {
     const { activeItem } = this.state
+    const { dispatch, history } = this.props
     return (
-      <React.Fragment>
+      <Menu.Menu position='right'>
         <Dropdown item text='Settings'>
           <Dropdown.Menu>
             <Dropdown.Item
@@ -29,8 +43,8 @@ class RightNav extends Component {
           as={Link}
           to='/logout'
           active={activeItem === 'logout'}
-          onClick={this.onClick} />
-      </React.Fragment>
+          onClick={() => dispatch(handleLogout(history))} />
+      </Menu.Menu>
     )
   }
 
@@ -42,7 +56,7 @@ class RightNav extends Component {
           name='login'
           as={Link}
           to='/login'
-          active={activeItem === 'logout'}
+          active={activeItem === 'login'}
           onClick={this.onClick} />
       </Menu.Menu>
     )
@@ -51,13 +65,14 @@ class RightNav extends Component {
   render = () => {
     const { user } = this.props
     const userState = user.id ? 'In' : 'Out'
-    return this[`renderLogged${userState}`]
+    return this[`renderLogged${userState}`]()
   }
 }
 
 const mapStateToProps = (state, props) => {
   return {
     user: state.user,
+    activeItem: state.navbar.activeItem,
   }
 }
 
