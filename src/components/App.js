@@ -8,6 +8,8 @@ import FetchUser from './FetchUser'
 import NavBar from './navbar/NavBar'
 import Home from './home/Home'
 import Settings from './settings/Settings'
+import Login from './Login'
+import Register from './Register'
 
 // Global Styles
 import 'semantic-ui-css/semantic.min.css'
@@ -21,6 +23,8 @@ const App = () => (
     <FetchUser>
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
         <ProtectedRoute path='/settings' component={Settings} />
 
         <Route component={NoMatch} />

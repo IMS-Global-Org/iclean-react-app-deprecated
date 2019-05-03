@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { Menu, Dropdown } from 'semantic-ui-react'
 import { handleLogout } from '../../actions/auth'
 
@@ -76,4 +76,4 @@ const mapStateToProps = (state, props) => {
   }
 }
 
-export default connect(mapStateToProps)(RightNav)
+export default withRouter(connect(mapStateToProps)(RightNav))

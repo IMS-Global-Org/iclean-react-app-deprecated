@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {
   Segment, Divider, Grid, Form,
-  Header, Icon, Search, Segment
+  Header, Icon, Button,
 } from 'semantic-ui-react'
+import { CenteredBlock } from '../lib/ui/IClean'
 
 // Actions
-import { handleLogin } from './actions/auth'
+import { handleLogin } from '../actions/auth'
 
 
 class Login extends Component {
@@ -16,7 +18,7 @@ class Login extends Component {
   onChange = ({ target: {id, value}}) => this.setState({ [id]: value })
 
   handleSubmit = (event) => {
-    e.preventDefault();
+    event.preventDefault();
     const { dispatch, history } = this.props
     const { email, password } = this.state
     dispatch(handleLogin(email, password, history))
@@ -24,55 +26,57 @@ class Login extends Component {
 
   render = () => {
     const { email, password } = this.state
-
+    
     return (
-      <Segment placeholder>
-        <Grid columns={2} stackable textAlign='center'>
-          <Divider vertical>Or</Divider>
+      <CenteredBlock>
+        <Segment placeholder>
+          <Grid columns={2} stackable textAlign='center'>
+            <Divider vertical>Or</Divider>
 
-          <Grid.Row verticalAlign='middle'>
-            <Grid.Column>
-              <Header icon>
-                <Icon name='user circle outline' />
-                User Login
-              </Header>
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Field>
-                  <label>E-mail</label>
-                  <input
-                    autoFocus
-                    required
-                    id='email'
-                    value={email}
-                    placeholder='E-mail'
-                    onChange={this.onChange} />
-                </Form.Field>
-                <Form.Field>
-                  <label>Password</label>
-                  <input
-                    required
-                    id='password'
-                    value={password}
-                    placeholder='Password'
-                    type='password'
-                    onChange={this.onChange} />
-                </Form.Field>
-                <Segment textAlign='center' basic>
-                  <Button primary type='submit'>Submit</Button>
-                </Segment>
-              </Form>
-            </Grid.Column>
+            <Grid.Row verticalAlign='middle'>
+              <Grid.Column>
+                <Header icon>
+                  <Icon name='user circle outline' />
+                  User Login
+                </Header>
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Field>
+                    <label>E-mail</label>
+                    <input
+                      autoFocus
+                      required
+                      id='email'
+                      value={email}
+                      placeholder='E-mail'
+                      onChange={this.onChange} />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Password</label>
+                    <input
+                      required
+                      id='password'
+                      value={password}
+                      placeholder='Password'
+                      type='password'
+                      onChange={this.onChange} />
+                  </Form.Field>
+                  <Segment textAlign='center' basic>
+                    <Button primary type='submit'>Submit</Button>
+                  </Segment>
+                </Form>
+              </Grid.Column>
 
-            <Grid.Column>
-              <Header icon>
-                <Icon name='globe' />
-                Register New User
-              </Header>
-              <Button primary>Create</Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Segment>
+              <Grid.Column>
+                <Header icon>
+                  <Icon name='globe' />
+                  Register New User
+                </Header>
+                <Button primary as={Link} to='/register'>Create</Button>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </CenteredBlock>
     )
   }
 }
