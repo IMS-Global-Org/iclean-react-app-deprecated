@@ -72,6 +72,8 @@ class Register extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {}
+const mapStateToProps = (state, props) => {
+  return {}
+}
 
 export default connect(mapStateToProps)(Register)
