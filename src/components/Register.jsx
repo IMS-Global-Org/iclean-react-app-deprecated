@@ -30,7 +30,7 @@ class Register extends Component {
 
     return (
       <CenteredBlock>
-        <Segment placeholder>
+        <Segment placeholder style={{ width: '30%' }}>
           <Header as='h1' textAlign='center'>User Registration</Header>
           <Form>
             <Form.Field>

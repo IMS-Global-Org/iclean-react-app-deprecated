@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Footer from './Footer'
 
 const Home = () => (
   <div>
-    Home Page Test
+    <Footer />
   </div>
 )
 

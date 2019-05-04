@@ -26,10 +26,10 @@ class Login extends Component {
 
   render = () => {
     const { email, password } = this.state
-    
+
     return (
       <CenteredBlock>
-        <Segment placeholder>
+        <Segment placeholder style={{ width: '50%' }}>
           <Grid columns={2} stackable textAlign='center'>
             <Divider vertical>Or</Divider>
 
