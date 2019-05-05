@@ -4,11 +4,11 @@ import { Segment, Icon } from 'semantic-ui-react'
 
 const SocialMedia = () => (
   <Segment basic textAlign='right'>
-    <Icon border name='facebook official' size='big' />
-    <Icon border name='twitter' size='big' />
-    <Icon border name='linkedin' size='big' />
-    <Icon border name='google plus square' size='big' />
-    <Icon border name='reddit' size='big' />
+    <Icon name='facebook official' size='big' />
+    <Icon name='twitter' size='big' />
+    <Icon name='linkedin' size='big' />
+    <Icon name='google plus square' size='big' />
+    <Icon name='reddit' size='big' />
   </Segment>
 )
 

@@ -52,9 +52,9 @@ const Footer = () => (
             Contact Us
           </Header>
           <CenteredBlock>
-            <Segment basic compact>
+            <Segment basic compact={true}>
               <List>
-                <List.Item compact>
+                <List.Item>
                   <List.Icon name='phone' />
                   <List.Content>(000) 000 - 0000</List.Content>
                 </List.Item>
