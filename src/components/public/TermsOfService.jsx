@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from '../../lib/IClean'
+import { Layout } from '../../lib/iclean-ui'
 
 const TermsOfService = () => (
   <Layout>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Segment, Grid, List, Header, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { CenteredBlock } from '../../lib/IClean'
+import { CenteredBlock } from '../../lib/iclean-ui'
 import SocialMedia from './SocialMedia'
 import TermsOfService from './TermsOfService'
 
