@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout } from '../../lib/ui/IClean'
+import { Layout } from '../../lib/IClean'
 
 const Pricing = () => (
   <Layout>

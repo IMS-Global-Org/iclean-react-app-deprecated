@@ -7,4 +7,4 @@ const SectionHeader = ({ title, icon }) => (
   </Divider>
 )
 
-export default SectionHeader
+export { SectionHeader }

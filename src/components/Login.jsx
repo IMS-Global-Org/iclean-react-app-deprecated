@@ -5,7 +5,7 @@ import {
   Segment, Divider, Grid, Form,
   Header, Icon, Button,
 } from 'semantic-ui-react'
-import { CenteredBlock } from '../lib/ui/IClean'
+import { CenteredBlock } from '../lib/IClean'
 
 // Actions
 import { handleLogin } from '../actions/auth'

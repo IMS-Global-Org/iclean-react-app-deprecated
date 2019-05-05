@@ -1,7 +1,6 @@
 import React from 'react'
 import { Segment, Grid, Image } from 'semantic-ui-react'
-import { CenteredBlock } from '../../lib/ui/IClean'
-import SectionHeader from './SectionHeader'
+import { CenteredBlock, SectionHeader } from '../../lib/IClean'
 
 
 const Header = () => (

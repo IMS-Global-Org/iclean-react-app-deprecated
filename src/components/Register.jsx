@@ -5,7 +5,7 @@ import {
   Header, Form,
   Button, Segment,
 } from 'semantic-ui-react'
-import { CenteredBlock } from '../lib/ui/IClean'
+import { CenteredBlock } from '../lib/IClean'
 
 
 class Register extends Component {
