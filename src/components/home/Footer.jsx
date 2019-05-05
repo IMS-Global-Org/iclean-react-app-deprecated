@@ -2,6 +2,8 @@ import React from 'react'
 import { Segment, Grid, List, Header, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { CenteredBlock } from '../../lib/ui/IClean'
+import SocialMedia from './SocialMedia'
+import TermsOfService from './TermsOfService'
 
 // CSS
 import '../../styles/home/Footer.sass'
@@ -70,12 +72,12 @@ const Footer = () => (
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Row columns={2}>
-        <Grid.Column>
-          Terms of Service
+      <Grid.Row columns={16}>
+        <Grid.Column width={11}>
+          <TermsOfService />
         </Grid.Column>
-        <Grid.Column>
-          Social Media
+        <Grid.Column width={5}>
+          <SocialMedia />
         </Grid.Column>
       </Grid.Row>
     </Grid>
