@@ -10,6 +10,7 @@ import Home from './home/Home'
 import Settings from './settings/Settings'
 import Login from './Login'
 import Register from './Register'
+import Public from './public/Public'
 
 // Global Styles
 import 'semantic-ui-css/semantic.min.css'
@@ -25,6 +26,7 @@ const App = () => (
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
+        <Route path='/public' component={Public} />
         <ProtectedRoute path='/settings' component={Settings} />
 
         <Route component={NoMatch} />
