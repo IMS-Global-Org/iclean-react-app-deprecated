@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Switch, Route, Link } from 'react-router-dom'
 import { Grid, Menu } from 'semantic-ui-react'
 
 // Component to display according to the tabs
@@ -31,24 +32,31 @@ class Settings extends Component {
           <Menu fluid vertical tabular>
             <Menu.Item
               name='contact_info'
+              as={Link}
+              to='/settings/contact_info'
               active={ activeItem === 'contact_info' }
               onClick={this.onClick} />
             <Menu.Item
               name='password'
+              as={Link}
+              to='/settings/password'
               active={ activeItem === 'password'}
               onClick={this.onClick} />
             <Menu.Item
               name='profile'
+              as={Link}
+              to='/settings/profile'
               active={ activeItem === 'profile' }
               onClick={this.onClick} />
           </Menu>
         </Grid.Column>
         <Grid.Column stretched width={12}>
-          {{
-            'contact_info': <ContactInfo />,
-            'password': <Password />,
-            'profile': <Profile />,
-          }[activeItem || 'contact_info']}
+          <Switch>
+            <Route exact path='/settings/contact_info' component={ContactInfo} />
+            <Route exact path='/settings/password' component={Password} />
+            <Route exact path='/settings/profile' component={Profile} />
+            <Route component={ContactInfo} />
+          </Switch>
         </Grid.Column>
       </Grid>
     )
