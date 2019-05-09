@@ -36,6 +36,20 @@ class RightNav extends Component {
               onClick={this.onClick}>
               Contact Info
             </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to='/settings/password'
+              active={ activeItem === 'password' }
+              onClick={this.onClick}>
+              Password
+            </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to='/settings/profile'
+              active={ activeItem === 'profile' }
+              onClick={this.onClick}>
+              Profile
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <Menu.Item

@@ -1,7 +1,4 @@
-const defaultState = {
-  id: '',
-}
-const user = (state = defaultState, action) => {
+const user = (state = {}, action) => {
   switch(action.type) {
     case 'LOGIN':
       return { ...action.user }

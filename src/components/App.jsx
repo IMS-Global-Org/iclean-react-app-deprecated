@@ -27,7 +27,7 @@ const App = () => (
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
         <Route path='/public' component={Public} />
-        <ProtectedRoute path='/settings' component={Settings} />
+        <ProtectedRoute path='/settings/:path' component={Settings} />
 
         <Route component={NoMatch} />
       </Switch>
