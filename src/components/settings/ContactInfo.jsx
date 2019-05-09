@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Form } from 'semantic-ui-react'
 
-import { updateUserAddress } from '../../actions/user'
+import {
+  updateContactInfoAddress,
+  showContactInfoAddress,
+} from '../../actions/settings'
 
 class ContactInfo extends Component {
   defaults = {
@@ -14,11 +18,23 @@ class ContactInfo extends Component {
   }
   state = { ...this.defaults }
 
+  componentDidMount = () => this.updateLocalState(this.props)
+  componentWillReceiveProps = (nextProps) => this.updateLocalState(nextProps)
+  updateLocalState = ( props ) => {
+    const { address, dispatch } = props
+    if( !address ) {
+      // TODO get the address from the database
+      dispatch(showContactInfoAddress())
+    } else {
+      this.setState({ ...address })
+    }
+  }
+
   onChange = ({target: {id,value}}) => this.setState({ [id]: value })
   onClick = (e) => {
     e.preventDefault()
     const { dispatch } = this.props
-    dispatch(updateUserAddress(this.state))
+    dispatch(updateContactInfoAddress(this.state))
   }
 
   render = () => {
@@ -68,11 +84,17 @@ class ContactInfo extends Component {
           onClick={this.onClick}
           color='green'
         floated='right'>
-          Submit
+          { this.props.address ? 'Update' : 'Create' }
         </Form.Button>
       </Form>
     )
   }
 }
 
-export default ContactInfo
+const mapStateToProps = (state, props) => {
+  return {
+    address: state.settings.contact_info.address
+  }
+}
+
+export default connect(mapStateToProps)(ContactInfo)
