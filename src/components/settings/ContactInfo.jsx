@@ -1,99 +1,71 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Form } from 'semantic-ui-react'
+import { Segment, Icon, Popup } from 'semantic-ui-react'
+import AddressForm from './AddressForm'
+import { indexUserAddresses } from '../../actions/user'
 
-import {
-  updateContactInfoAddress,
-  showContactInfoAddress,
-} from '../../actions/settings'
 
 class ContactInfo extends Component {
-  defaults = {
-    street1: '',
-    street2: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    country: '',
-  }
+  defaults = { addresses: '' }
   state = { ...this.defaults }
 
-  componentDidMount = () => this.updateLocalState(this.props)
-  componentWillReceiveProps = (nextProps) => this.updateLocalState(nextProps)
-  updateLocalState = ( props ) => {
-    const { address, dispatch } = props
-    if( !address ) {
-      // TODO get the address from the database
-      dispatch(showContactInfoAddress())
+  componentDidMount = () => {
+    const { addresses, dispatch } = this.props
+    !addresses && dispatch(indexUserAddresses())
+    this.setState({ addresses })
+  }
+  componentWillReceiveProps = (nextProps) => {
+    const { addresses } = nextProps
+    this.setState({ addresses })
+  }
+
+  renderAddresses = () => {
+    const { addresses } = this.state
+    if( addresses && addresses.length > 0 ) {
+      return addresses.map( (address) => (
+        address.id
+          ? this.renderOldAddressForm(address)
+          : this.renderNewAddressForm()
+      ))
     } else {
-      this.setState({ ...address })
+      return this.renderNewAddressForm()
     }
   }
 
-  onChange = ({target: {id,value}}) => this.setState({ [id]: value })
-  onClick = (e) => {
-    e.preventDefault()
-    const { dispatch } = this.props
-    dispatch(updateContactInfoAddress(this.state))
-  }
+  renderOldAddressForm = (address) => (
+    <Segment key={address.id} padded>
+      <AddressForm address={address} />
+    </Segment>
+  )
 
-  render = () => {
-    const{ street1, street2, city, state, zipcode, country } = this.state
+  renderNewAddressForm = () => (
+    <Segment key={0} padded>
+      <AddressForm />
+    </Segment>
+  )
 
-    return (
-      <Form>
-        <Form.Input
-          fluid
-          label='Street'
-          id='street1'
-          value={street1}
-          onChange={this.onChange} />
-        <Form.Input
-          fluid
-          label='Street'
-          id='street2'
-          value={street2}
-          onChange={this.onChange} />
-        <Form.Group widths='equal'>
-          <Form.Input
-            fluid
-            label='City'
-            id='city'
-            value={city}
-            onChange={this.onChange} />
-          <Form.Input
-            fluid
-            label='State'
-            id='state'
-            value={state}
-            onChange={this.onChange} />
-          <Form.Input
-            fluid
-            label='Zipcode'
-            id='zipcode'
-            value={zipcode}
-            onChange={this.onChange} />
-          <Form.Input
-            fluid
-            label='Country'
-            id='country'
-            value={country}
-            onChange={this.onChange} />
-        </Form.Group>
-        <Form.Button
-          onClick={this.onClick}
-          color='green'
-        floated='right'>
-          { this.props.address ? 'Update' : 'Create' }
-        </Form.Button>
-      </Form>
-    )
-  }
+  onClick = () => this.setState({ addresses: [...this.state.addresses, {}] })
+
+  render = () => (
+    <Segment.Group>
+      <Segment>
+        <Popup
+          trigger={<Icon
+            name='add circle'
+            color='green'
+            size='large'
+            onClick={this.onClick} />}
+          content='Add new address'
+        />
+      </Segment>
+      { this.renderAddresses() }
+    </Segment.Group>
+  )
 }
 
 const mapStateToProps = (state, props) => {
   return {
-    address: state.settings.contact_info.address
+    addresses: state.user.addresses,
   }
 }
 

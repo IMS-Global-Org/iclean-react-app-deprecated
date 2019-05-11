@@ -52,14 +52,12 @@ class Settings extends Component {
             </Menu>
           </Grid.Column>
           <Grid.Column stretched width={12}>
-            <Segment padded>
-              <Switch>
-                <Route exact path='/settings/contact_info' component={ContactInfo} />
-                <Route exact path='/settings/password' component={Password} />
-                <Route exact path='/settings/profile' component={Profile} />
-                <Route component={ContactInfo} />
-              </Switch>
-            </Segment>
+            <Switch>
+              <Route exact path='/settings/contact_info' component={ContactInfo} />
+              <Route exact path='/settings/password' component={Password} />
+              <Route exact path='/settings/profile' component={Profile} />
+              <Route component={ContactInfo} />
+            </Switch>
           </Grid.Column>
         </Grid>
       </Segment>
