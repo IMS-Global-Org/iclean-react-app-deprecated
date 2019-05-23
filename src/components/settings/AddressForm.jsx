@@ -1,23 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Segment, Form, Select } from 'semantic-ui-react'
-import { isNumber, snakeCase, camelCase } from 'lodash'
+import { Segment, Form, Select, Button } from 'semantic-ui-react'
+import { isNumber, isEqual } from 'lodash'
 
 import {
   updateUserAddress,
   createUserAddress,
+  deleteUserAddress,
 } from '../../actions/user'
 
 class AddressForm extends Component {
   defaults = {
-    id:'',
-    street1: '',
-    street2: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    country: '',
-    addressType: '',
+    form: {
+      id:'',
+      street1: '',
+      street2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      country: '',
+      address_type: '',
+    },
+    hasChanges: false,
   }
   state = { ...this.defaults }
 
@@ -30,50 +34,49 @@ class AddressForm extends Component {
   componentDidMount = () => this.updateLocalState(this.props)
   componentWillReceiveProps = (nextProps) => this.updateLocalState(nextProps)
   updateLocalState = ( props ) => {
-    const { id: oldId } = this.state
+    const oldAddress = this.state.form
     const { address: newAddress } = props
-    if( newAddress && oldId !== newAddress.id ) {
-      this.setState({ ...this.toData() })
+    if( newAddress && !isEqual(oldAddress, newAddress) ) {
+      this.setState({ form: { ...newAddress } })
     }
   }
 
-  isNewForm = () => !isNumber(this.state.id)
-  toParams = () => {
-    const formData = {}
-    Object.keys(this.state).forEach( (key) => {
-      formData[snakeCase(key)] = this.state[key]
-    })
-    return formData
-  }
-  toData = () => {
-    const { address } = this.props
-    const data = {}
-    const stateKeys = Object.keys(this.state)
-    Object.keys(this.props.address).forEach( (key) =>{
-      const newKey = camelCase(key)
-      if( stateKeys.includes(newKey) ) {
-        data[newKey] = address[key]
-      }
-    })
-    return data
-  }
+  isNewForm = () => !isNumber(this.state.form.id)
 
-  onChange = ({target: {id, value}}) => this.setState({ [id]: value })
-  onSelect = (e, {id, value}) => this.setState({ [id]: value })
-  onClick = (e) => {
+  onChange = ({target: {id, value}}) => this.setState({
+    form: { ...this.state.form, [id]: value },
+    hasChanges: true,
+  })
+  onSelect = (e, {id, value}) => this.setState({
+    form: { ...this.state.form, [id]: value },
+    hasChanges: true,
+  })
+  onCreate = (e) => {
     e.preventDefault()
     const { dispatch } = this.props
     if( this.isNewForm() ){
-      dispatch(createUserAddress(this.toParams()))
+      this.setState({ hasChanges: !this.state.hasChanges },() => {
+        dispatch(createUserAddress(this.state.form))
+      })
     } else {
-      dispatch(updateUserAddress(this.toParams()))
+      this.setState({ hasChanges: !this.state.hasChanges },() => {
+        dispatch(updateUserAddress(this.state.form))
+      })
     }
+  }
+  onDelete = (e) => {
+    e.preventDefault()
+    const { dispatch } = this.props
+    dispatch(deleteUserAddress(this.state.form.id))
   }
 
   render = () => {
     const{
-      street1, street2, city, state,
-      zipcode, country, addressType
+      form: {
+        street1, street2, city, state,
+        zipcode, country, address_type,
+      },
+      hasChanges,
     } = this.state
 
     return (
@@ -86,9 +89,9 @@ class AddressForm extends Component {
           <Select
             required
             width={2}
-            id='addressType'
+            id='address_type'
             placeholder='Address Type'
-            value={addressType}
+            value={address_type}
             onChange={this.onSelect}
             options={this.addressTypeOptions} />
         </Segment>
@@ -131,11 +134,19 @@ class AddressForm extends Component {
             onChange={this.onChange} />
         </Form.Group>
         <Segment basic textAlign='right'>
-          <Form.Button
+          <Button
             color='green'
-            onClick={this.onClick}>
+            onClick={this.onCreate}>
             { this.isNewForm() ? 'Create' : 'Update' }
-          </Form.Button>
+          </Button>
+          { !this.isNewForm() &&
+            <Button
+              color='red'
+              disabled={hasChanges}
+              onClick={this.onDelete}>
+              Delete
+            </Button>
+          }
         </Segment>
       </Form>
     )

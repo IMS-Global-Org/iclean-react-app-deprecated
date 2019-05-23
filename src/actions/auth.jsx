@@ -71,3 +71,24 @@ export const validateToken = (cb = f => f) => {
       .catch( () => cb() )
   }
 }
+
+// reset current password
+export const resetPassword = (oldPassword, newPassword, newPasswordConfirmation) => {
+  return (dispatch, getStore) => {
+    axios
+      .patch('/api/auth/password', {
+        old_password: oldPassword,
+        new_password: newPassword,
+        new_password_confirmation: newPasswordConfirmation,
+      })
+      .then( res => {
+        dispatch({
+          type: 'PASSWORD_RESET',
+          user: res.data.data,
+        })
+      })
+      .catch( res => {
+        dispatch(setFlash('Password Not Updated Correctly!', 'error'))
+      })
+  }
+}

@@ -17,7 +17,7 @@ export const indexUserAddresses = () => {
   }
 }
 
-export const updateUserAddress = (address) => {
+export const updateUserAddress = (address, cb = f => f) => {
   return (dispatch, getState) => {
     const userId = getState().user.id
     axios.patch(`/api/users/${userId}/addresses/${address.id}`, { address })
@@ -26,6 +26,7 @@ export const updateUserAddress = (address) => {
           type: 'UPDATE_USER_ADDRESS',
           address: res.data
         })
+        cb()
       })
       .catch( (res) => dispatch(flashErrors(res)) )
   }
@@ -45,7 +46,7 @@ export const showUserAddress = () => {
   }
 }
 
-export const createUserAddress = ( address ) => {
+export const createUserAddress = ( address, cb = f => f ) => {
   return (dispatch, getState) => {
     const userId = getState().user.id
     axios.post(`/api/users/${userId}/addresses`, { address })
@@ -54,7 +55,22 @@ export const createUserAddress = ( address ) => {
           type: 'CREATE_USER_ADDRESS',
           address: res.data,
         })
+        cb()
       })
       .catch( (res) => dispatch(flashErrors(res)) )
+  }
+}
+
+export const deleteUserAddress = (addressId) => {
+  return (dispatch, getState) => {
+    const userId = getState().user.id
+    axios.delete(`/api/users/${userId}/addresses/${addressId}`)
+      .then( res => {
+        dispatch({
+          type: 'DELETE_USER_ADDRESS',
+          address: res.data,
+        })
+      })
+      .catch( res => dispatch(flashErrors(res)) )
   }
 }
