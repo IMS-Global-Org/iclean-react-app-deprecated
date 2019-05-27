@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { Segment, Grid, Divider, Form, Button } from 'semantic-ui-react'
 
 import { resetPassword } from '../../actions/auth'
 
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = ({ dispatch, history }) => {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
 
-
   const onSubmit = (e) => {
     e.preventDefault()
-    const { dispatch } = this.props
-    dispatch(resetPassword(oldPassword, newPassword, newPasswordConfirm))
+    dispatch(resetPassword(oldPassword, newPassword, newPasswordConfirm, () => {
+      debugger
+      history.push('/home')
+    }))
   }
 
   return (
@@ -31,7 +33,7 @@ const ResetPasswordForm = () => {
                 type='password'
                 id='oldPassword'
                 value={oldPassword}
-                onChange={setOldPassword}
+                onChange={e => setOldPassword(e.target.value)}
                 required
               />
             </Grid.Column>
@@ -43,15 +45,15 @@ const ResetPasswordForm = () => {
                 type='password'
                 id='newPassword'
                 value={newPassword}
-                onChange={setNewPassword}
+                onChange={e => setNewPassword(e.target.value)}
                 required
               />
               <Form.Input
                 label='New Password Confirm'
                 type='password'
                 id='newPasswordConfirm'
-                value={newPasswordConfirm}
-                onChange={setNewPasswordConfirm}
+                walue={newPasswordConfirm}
+                onChange={e => setNewPasswordConfirm(e.target.value)}
                 required
               />
             </Grid.Column>
@@ -67,4 +69,4 @@ const ResetPasswordForm = () => {
   )
 }
 
-export default connect()(ResetPasswordForm)
+export default connect()(withRouter(ResetPasswordForm))

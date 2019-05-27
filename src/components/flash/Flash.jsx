@@ -1,8 +1,7 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { connect  } from 'react-redux'
 import { Segment, Message  } from 'semantic-ui-react'
 import styled from 'styled-components'
-import scrollToComponent from 'react-scroll-to-component'
 
 import { clearFlash  } from '../../actions/flash'
 
@@ -16,7 +15,6 @@ const StackMsg = styled.p`
 
 
 const Flash = ({ message, stack, msgType, dispatch }) => {
-  const flashBlockRef = useRef(null)
 
   const MsgTypes = {
     error: false,

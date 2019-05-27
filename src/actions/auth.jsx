@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setFlash } from '../actions/flash'
+import { setFlash, flashSuccess } from '../actions/flash'
 
 // registerUser
 export const registerUser = (email, password, passConf, history) => {
@@ -73,19 +73,24 @@ export const validateToken = (cb = f => f) => {
 }
 
 // reset current password
-export const resetPassword = (oldPassword, newPassword, newPasswordConfirmation) => {
+export const resetPassword = (oldPassword, newPassword, newPasswordConfirmation, cb = f => f) => {
   return (dispatch, getStore) => {
+    const userId = getStore().user.id
     axios
-      .patch('/api/auth/password', {
-        old_password: oldPassword,
-        new_password: newPassword,
-        new_password_confirmation: newPasswordConfirmation,
+      .patch(`/api/users/${userId}/reset_password`, {
+        user: {
+          old_password: oldPassword,
+          new_password: newPassword,
+          new_password_confirmation: newPasswordConfirmation,
+        },
       })
       .then( res => {
         dispatch({
           type: 'PASSWORD_RESET',
           user: res.data.data,
         })
+        dispatch(flashSuccess('Password Reset Sucessfully!'))
+        cb()
       })
       .catch( res => {
         dispatch(setFlash('Password Not Updated Correctly!', 'error'))
