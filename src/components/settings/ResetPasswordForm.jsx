@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Segment, Grid, Divider, Form, Button } from 'semantic-ui-react'
 
-import { resetPassord } from '../../actions/auth'
+import { resetPassword } from '../../actions/auth'
 
 
 const ResetPasswordForm = () => {
@@ -14,7 +14,7 @@ const ResetPasswordForm = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     const { dispatch } = this.props
-    dispatch(resetPassord(oldPassword, newPassword, newPasswordConfirm))
+    dispatch(resetPassword(oldPassword, newPassword, newPasswordConfirm))
   }
 
   return (

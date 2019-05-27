@@ -1,5 +1,5 @@
-export const setFlash = (message, msgType) => {
-  return { type: 'SET_FLASH', message, msgType }
+export const setFlash = (message, msgType, stack = '') => {
+  return { type: 'SET_FLASH', message, msgType, stack }
 }
 
 export const clearFlash = () => {
@@ -9,7 +9,7 @@ export const clearFlash = () => {
 export const flashErrors = (res) => {
   return {
     type: 'SET_FLASH',
-    message: res.message,
+    message: res.errors,
     stack: res.stack,
     msgType: 'error',
   }
@@ -19,6 +19,7 @@ export const flashSuccess = (res) => {
   return {
     type: 'SET_FLASH',
     message: res.messsage,
+    stack: res.stack,
     msgType: 'success',
   }
 }
