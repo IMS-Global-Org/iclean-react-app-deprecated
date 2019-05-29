@@ -14,8 +14,7 @@ const ResetPasswordForm = ({ dispatch, history }) => {
   const onSubmit = (e) => {
     e.preventDefault()
     dispatch(resetPassword(oldPassword, newPassword, newPasswordConfirm, () => {
-      debugger
-      history.push('/home')
+      history.push('/')
     }))
   }
 

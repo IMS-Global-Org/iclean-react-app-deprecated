@@ -50,6 +50,13 @@ class RightNav extends Component {
               onClick={this.onClick}>
               Profile
             </Dropdown.Item>
+            <Dropdown.Item
+              as={Link}
+              to='/settings/work_history'
+              active={ activeItem === 'work_history' }
+              onClick={this.onClick}>
+              Work History
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <Menu.Item
