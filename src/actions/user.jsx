@@ -1,6 +1,6 @@
 import axios from 'axios'
 // TODO create helper methods, {ie. dispatch(flashErrors(res)) }
-import { flashErrors } from './flash'
+import { flashError } from './flash'
 
 export const indexUserAddresses = () => {
   return (dispatch, getState) => {
@@ -12,7 +12,7 @@ export const indexUserAddresses = () => {
           addresses: res.data,
         })
       })
-      .catch( res => dispatch(flashErrors(res.response.data)) )
+      .catch( res => dispatch(flashError(res.response.data)) )
   }
 }
 
@@ -27,7 +27,7 @@ export const updateUserAddress = (address, cb = f => f) => {
         })
         cb()
       })
-      .catch( (res) => dispatch(flashErrors(res.response.data)) )
+      .catch( (res) => dispatch(flashError(res.response.data)) )
   }
 }
 
@@ -41,7 +41,7 @@ export const showUserAddress = () => {
           address: res.data,
         })
       })
-      .catch( (res) => dispatch(flashErrors(res.response.data)) )
+      .catch( (res) => dispatch(flashError(res.response.data)) )
   }
 }
 
@@ -56,7 +56,7 @@ export const createUserAddress = ( address, cb = f => f ) => {
         })
         cb()
       })
-      .catch( (res) => dispatch(flashErrors(res.response.data)) )
+      .catch( (res) => dispatch(flashError(res.response.data)) )
   }
 }
 
@@ -70,6 +70,6 @@ export const deleteUserAddress = (addressId) => {
           address: res.data,
         })
       })
-      .catch( res => dispatch(flashErrors(res.response.data)) )
+      .catch( res => dispatch(flashError(res.response.data)) )
   }
 }
