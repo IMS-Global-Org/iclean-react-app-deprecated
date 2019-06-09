@@ -61,7 +61,7 @@ class Settings extends Component {
             <Switch>
               <Route exact path='/settings/contact_info' component={ContactInfo} />
               <Route exact path='/settings/password' component={Password} />
-              <Route exact path='/settings/profile' component={Profile} />
+              <Route path='/settings/profile' component={Profile} />
               <Route exact path='/settings/work_history' component={WorkHistory} />
               <Route component={ContactInfo} />
             </Switch>

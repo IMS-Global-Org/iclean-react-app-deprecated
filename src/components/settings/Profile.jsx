@@ -8,7 +8,7 @@ const Demographics = lazy(() => import('./profile/Demographics'))
 const Background = lazy(() => import('./profile/Background'))
 const SocialMedia = lazy(() => import('./profile/SocialMedia'))
 const SocialEconomics = lazy(() => import('./profile/SocialEconomics'))
-const Phychographics = lazy(() => import('./profile/Phychographics'))
+const Psychographics = lazy(() => import('./profile/Psychographics'))
 
 const SubSections = [
   { title: 'Contact Information', component: ContactInfo },
@@ -16,7 +16,7 @@ const SubSections = [
   { title: 'Background', component: Background },
   { title: 'SocialMedia', component: SocialMedia },
   { title: 'SocialEconomics', component: SocialEconomics },
-  { title: 'Phychographics', component: Phychographics },
+  { title: 'Psychographics', component: Psychographics },
 ]
 
 const Profile = () => {
