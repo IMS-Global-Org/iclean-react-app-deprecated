@@ -31,7 +31,8 @@ export const indexPsychographicQuestions = (psychoId) => {
 export const updatePsychographicAnswers = (psychoId, answers) => {
   return (dispatch, getStore) => {
     const userId = getStore().user.id
-    axios.patch(`/api/users/${userId}/psychographics/${psychoId}/answers`, { answers })
+    const url = `/api/users/${userId}/psychographics/${psychoId}/answers/batch_yes_no`
+    axios.patch(url, { answers })
     .then( res => {
       dispatch({
       type: 'UPDATE_PSYCHOGRAPHIC_ANSWERS',

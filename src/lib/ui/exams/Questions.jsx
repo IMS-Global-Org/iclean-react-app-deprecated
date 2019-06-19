@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { chunk } from 'lodash'
 import {
-  indexPsychographicQuestions,
-  updatePsychographicAnswers,
+  indexQuestions,
+  updateAnswers,
 } from '../../../actions/settings'
 import { Grid, Form, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
@@ -16,13 +16,13 @@ const YesNoQuestion = styled.div`
 `
 
 
-class PsychographicQuiz extends Component {
+class Questions extends Component {
   state = {}
 
   componentDidMount = () => {
     const { questions, dispatch, match } = this.props
     if( questions.length <= 0 ) {
-      dispatch(indexPsychographicQuestions(match.params.psycho_id))
+      dispatch(indexQuestions(match.params.exam_id))
     }
   }
 
@@ -78,7 +78,7 @@ class PsychographicQuiz extends Component {
     const { dispatch, match } = this.props
     const answers = Object.entries(this.state).map( ans => ({ question: parseInt(ans[0],10), answer: ans[1] }) )
     if( answers.length > 0 ) {
-      dispatch(updatePsychographicAnswers(match.params.psycho_id, answers))
+      dispatch(updateAnswers(match.params.exam_id, answers))
     }
   }
 
@@ -109,4 +109,4 @@ const mapStateToProps = (state, props) => ({
   questions: state.settings.profile.questions,
 })
 
-export default connect(mapStateToProps)(PsychographicQuiz)
+export default connect(mapStateToProps)(Questions)

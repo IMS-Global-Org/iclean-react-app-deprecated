@@ -25,7 +25,7 @@ const indexPsychographicQuestions = (state, action) => {
     ...state,
     profile: {
       ...state.profile,
-      questions: action.questions
+      questions: action.questions,
     }
   }
 }
