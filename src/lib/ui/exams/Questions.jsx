@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { chunk } from 'lodash'
-import {
-  indexQuestions,
-  updateAnswers,
-} from '../../../actions/settings'
+import { indexQuestions } from '../../../actions/questions'
+import { updateAnswers } from '../../../actions/answers'
+import { resolvedPath } from '../../../actions/boiler-plates'
 import { Grid, Form, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 
@@ -21,8 +20,11 @@ class Questions extends Component {
 
   componentDidMount = () => {
     const { questions, dispatch, match } = this.props
-    if( questions.length <= 0 ) {
-      dispatch(indexQuestions(match.params.exam_id))
+    if( questions && questions.length <= 0 ) {
+      const exam_id = match.params.exam_id
+      const examable_type = match.params.exam_id
+      const statePath = this.props.statePath
+      dispatch(indexQuestions(exam_id))
     }
   }
 
@@ -76,7 +78,8 @@ class Questions extends Component {
     // TODO check for required answers
     // TODO Incluye un button para borrar la eleccion si no se lo require,
     const { dispatch, match } = this.props
-    const answers = Object.entries(this.state).map( ans => ({ question: parseInt(ans[0],10), answer: ans[1] }) )
+    const answers = Object.entries(this.state)
+      .map( ans => ({ question: parseInt(ans[0],10), answer: ans[1] }) )
     if( answers.length > 0 ) {
       dispatch(updateAnswers(match.params.exam_id, answers))
     }
@@ -105,8 +108,14 @@ class Questions extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
-  questions: state.settings.profile.questions,
-})
+const mapStateToProps = (state, props) => {
+  return {
+    questions: resolvedPath(props.statePath, state).questions,
+  }
+}
 
-export default connect(mapStateToProps)(Questions)
+const ConnectedQuestion = connect(mapStateToProps)(Questions)
+
+export {
+  ConnectedQuestion as Questions,
+}

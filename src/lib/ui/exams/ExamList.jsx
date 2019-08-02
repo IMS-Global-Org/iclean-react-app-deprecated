@@ -1,25 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component, lazy } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Grid, Header, Icon, Item } from 'semantic-ui-react'
 import { Layout } from '../../../lib/iclean-ui'
-import ExamItem from './ExamItem'
+import { resolvedPath } from '../../../actions/boiler-plates'
+import { ExamItem } from './ExamItem'
 
 // Actions
-import { indexExams } from '../../../actions/settings'
+import { indexExams } from '../../../actions/exams'
 
 // Show a list of possible Exams to client
 class ExamList extends Component {
 
   componentDidMount = () => {
-    const { exams, dispatch } = this.props
+    const { exams, dispatch, match } = this.props
+    const { examable_type, examable_id } = match.params
+    debugger
 
     if( exams.length <= 0 ) {
-      dispatch(indexExams())
+      dispatch(indexExams(examable_type, examable_id))
     }
   }
 
   render = () => {
-    const { exams, header, subHeader = '' } = this.props
+    const { exams, header, subHeader = '', examable_type = '' } = this.props
     return (
       <Grid divided='vertically'>
         <Grid.Row>
@@ -37,7 +41,7 @@ class ExamList extends Component {
         <Grid.Row>
           <Item.Group>
             { exams.map( (exam, index) => (
-              <ExamItem key={index} exam={exam} />
+              <ExamItem key={index} exam={exam} examable_type={examable_type} />
             ) ) }
           </Item.Group>
         </Grid.Row>
@@ -46,6 +50,33 @@ class ExamList extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({ exams: state.settings.profile.exams })
+ExamList.propTypes = {
+  exams: PropTypes.array.isRequired,
+  header: PropTypes.string.isRequired,
+  subHeader: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.object,
+  ]),
+}
+ExamList.defaultProps = {
+  exams: [],
+}
 
-export default connect(mapStateToProps)(ExamList)
+/*
+ *const resolvedPath = (path, obj) => {
+ *  return path.split('.').reduce((prev, curr) => {
+ *        return prev ? prev[curr] : null
+ *    }, obj)
+ *}
+ */
+
+const mapStateToProps = (state, props) => {
+  const psychographics = resolvedPath(props.statePath, state)
+  return { exams: psychographics.exams }
+}
+const ConnectedExamList = connect(mapStateToProps)(ExamList)
+
+export {
+  ConnectedExamList as ExamList,
+}

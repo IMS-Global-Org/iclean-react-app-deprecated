@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 import { Item } from 'semantic-ui-react'
 
 
-const ExamItem = ({ exam: {id, tittle, description} }) => (
+const ExamItem = ({ exam: {id, title, description}, examable_type }) => (
   <Item>
     <Item.Content>
       <Item.Header
-        to={`/settings/profile/exams/${id}/questions`}
+        to={`/settings/profile/${examable_type}/exams/${id}/questions`}
         as={Link}>
         {title}
       </Item.Header>
@@ -25,7 +25,12 @@ ExamItem.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-  })
+  }),
+  examable_type: PropTypes.string.isRequired,
 }
 
-export default connect()(ExamItem)
+const ConnectedExamItem = connect()(ExamItem)
+
+export {
+  ConnectedExamItem as ExamItem,
+}
